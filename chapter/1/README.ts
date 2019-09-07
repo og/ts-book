@@ -42,7 +42,9 @@ console.log(i18nTime({
 
 
 ;`
-js 中函数的使用非常多。定义 Time 类型， time.unit 定义为枚举类型 Unit time.value 定义为 number 类型。Time作为 i18nTime 的函数参数。
+定义 Time 接口，time.unit 定义为枚举类型 Unit 。 
+time.value 定义为 number 类型。
+Time作为 i18nTime 的函数参数。
 
 interface 约束了参数的属性类型，如果类型错误，在编译器就能发现错误，并且开发人员通过查看 interface 即可知道接口参数的详细情况。不需要编写啰嗦的 jsdoc。
   
@@ -136,4 +138,7 @@ getWecomeNewUserMessage({
     }
 
 请将可选属性当做药品使用，在必要时才使用可选属性，这样能提高代码稳定性。
+
 `
+
+// @todo 增加一个不应该用可选属性的示例  Fail FailCode FailMsg
