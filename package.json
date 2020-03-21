@@ -1,13 +1,25 @@
 {
+  "name": "ts-book",
+  "version": "0.0.2",
+  "main": "lib/index.js",
   "scripts": {
-    "ts": "tsc"
+    "doc": "fis3 release -d ./ -r code -f compile/fis-conf.js",
+    "dev": "fis3 release -w -d ./ -r code -f compile/fis-conf.js",
+    "test": "jest -w",
+    "test:ci": "jest",
+    "release": "jest && tsc && npm run doc"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.18",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.6.2"
   },
   "dependencies": {
-    "@babel/core": "^7.6.0",
-    "@babel/preset-env": "^7.6.0",
     "express": "^4.17.1",
-    "open": "^6.4.0",
-    "tslint": "^5.19.0",
-    "typescript": "^3.6.2"
+    "global": "^4.4.0",
+    "immutable": "^4.0.0-rc.12",
+    "open": "^7.0.3",
+    "serve": "^11.3.0"
   }
 }
