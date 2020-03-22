@@ -87,9 +87,9 @@ interface iTimeDict {
     unit : {
         second: string
         minute: string
-    }
+    }iTimeDict
 }
-const timeDict :iTimeDict = {
+const timeDict : = {
     unit: {
         second: "second",
         minute: "minute",

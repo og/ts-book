@@ -67,3 +67,14 @@ console.log('-',padLeftString("Hello world", "nimo"),'-')
 //     console.log(author.name, author.age, author.active)
 // }
 // ctrl({name:"nimo",age:19})
+
+
+interface iRes {
+    color: string
+    size: number
+}
+
+test("response", function () {
+    let res :iRes = JSON.parse(`{"colr":"red"}`)
+    console.log(res)
+})
