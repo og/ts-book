@@ -105,31 +105,31 @@ interface iMakePerson {
     age?:number
 }
 
-function makePerson(v: iMakePerson) :iPerson {
+function Person(v: iMakePerson) :iPerson {
     return {
         name: v.name || "",
         age: v.age || 0
     }
 }
 test("响应数据空值填充", function () {
-    let response = makePerson(JSON.parse(`{"name":"nimo"}`))
+    let response = Person(JSON.parse(`{"name":"nimo"}`))
     // 不会出现 response.age 是 undefined 导致的 NaN 的情况
     expect(response.age + 1).toBe(1)
 })
 
-test("多处使用 makePerson ", function () {
-    let a  = makePerson({
+test("多处使用 Person ", function () {
+    let a  = Person({
         name: "nimo",
     })
     expect(a).toStrictEqual({name:"nimo",age:0})
-    let b = makePerson({
+    let b = Person({
         age: 18,
     });
     expect(b).toStrictEqual({name:"",age:18})
 })
 
 ;`
-如果要新增属性则只需在  iPerson 和 iMakePerson中分别增加新属性
+如果要新增属性则只需在  iPerson 和 iPerson中分别增加新属性
 
 比如新增了 nikename
 
@@ -144,7 +144,7 @@ interface iMakePerson {
     age?:number
     nikename?:string
 }
-function makePerson(v: iMakePerson) :iPerson {
+function Person(v: iMakePerson) :iPerson {
     return {
         name: v.name || "",
         age: v.age || 0,
@@ -153,17 +153,17 @@ function makePerson(v: iMakePerson) :iPerson {
 }
 @@@
 
-使用所有 makePerson不会报错,因为接口定义了 nikename?:string 
+使用所有 Person不会报错,因为接口定义了 nikename?:string 
 
 @@@ts
-let a  = makePerson({
+let a  = Person({
     name: "nimo",
 })
 expect(a).toStrictEqual({name:"nimo",age:0,nikename:""})
 @@@
 
 
-如果新增了 gender ,并且要求 gender 是必填的那么可以这样修改 iMakerPerson
+如果新增了 gender ,并且要求 gender 是必填的那么可以这样修改 iPerson
 
 @@@ts
 interface iPerson {
@@ -178,7 +178,7 @@ interface iMakePerson {
     nikename?:string
     gender:string
 }
-function makePerson(v: iMakePerson) :iPerson {
+function Person(v: iMakePerson) :iPerson {
     return {
         name: v.name || "",
         age: v.age || 0,
@@ -188,17 +188,17 @@ function makePerson(v: iMakePerson) :iPerson {
 }
 @@@
 
-注意此时在 iMakePerson 中 gender 不是 gender? 这样在所有调用 makePerson 的地方都需要定义 gender
+注意此时在 iPerson 中 ^gender^ 不是 ^gender?^,没有通过 ? 定义可以为undefined. 这样在所有调用 Person 的地方都需要定义 gender
 
 @@@ts
 // 编译期报错
-// TS2345: Argument of type '{ name: string; }' is not assignable to parameter of type 'iMakePerson'.
-makePerson({
+// TS2345: Argument of type '{ name: string; }' is not assignable to parameter of type 'iPerson'.
+Person({
     name: "nimo",
 })
 
 // 不报错
-makePerson({
+Person({
     name: "nimo",
     gender: "male",
 })
@@ -219,6 +219,8 @@ false
 
 这是因为如果你在 make 中定义了以上其他的值,会让调用 make 函数的人不明白到底make后属性默认值是什么.
 
+> 不能用 {} 是因为 另外一个make函数替代了空值对象.
+
 另外一个make 函数请看下面的例子
 
 `
@@ -228,7 +230,7 @@ interface iSon {
 interface iMakeSon {
     name?:string
 }
-function makeSon (v :iMakeSon):iSon {
+function Son (v :iMakeSon):iSon {
     return {
         name: v.name || ""
     }
@@ -241,17 +243,17 @@ interface iMakeFamily {
     unity?: boolean
     son?: iSon
 }
-function makeFamily(v :iMakeFamily):iFamily {
+function Family(v :iMakeFamily):iFamily {
     return {
         unity: v.unity || false,
-        son: v.son || makeSon({})
+        son: v.son || Son({})
     }
 }
 
 test("多层mark",function () {
-    let data = makeFamily({
+    let data = Family({
         unity: true,
-        // son: makeSon({}) // 此行可有可无,根据实际场景决定
+        // son: Son({}) // 此行可有可无,根据实际场景决定
     })
     expect(data).toStrictEqual({
         "son": {
